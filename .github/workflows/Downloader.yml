@@ -33,27 +33,6 @@ jobs:
       with:
         python-version: 3.7
 
-    - name: Clone source code
-      run: |
-       curl https://storage.googleapis.com/git-repo-downloads/repo -o repo
-       chmod +x repo
-       ./repo init -u git://source.codeaurora.org/quic/cc-qrdk/releases/manifest/qstak -b release -m caf_AU_LINUX_QSDK_NHSS.QSDK.12.1.R2_TARGET_ALL.12.1.02.841.013.xml
-       ls
-       ./repo sync
-       ls
-
     - name: Check space usage
-      run: df -hT
-
-    - name: Achieve
-      run: |
-       cd ..
-       mkdir packup
-       7z a -t7z packup/qsdk.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
-
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@main
-      with:
-        name: qsdk-ax6
-        path: /home/runner/work/qsdk-ax6/packup
+      run: df -hT&&7z
 
