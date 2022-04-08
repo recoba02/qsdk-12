@@ -49,7 +49,7 @@ jobs:
       run: |
        cd ..
        mkdir packup
-       7z a -t7z packup/qsdk.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
+       7z a -t7z packup/qsdk.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -ms=4g -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
