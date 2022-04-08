@@ -45,15 +45,16 @@ jobs:
     - name: Check space usage
       run: df -hT
 
-    - name: Achieve
+    - name: Commit files
+      env:
+       github_token: ${{ secrets.GITHUB_TOKEN }}
       run: |
-       cd ..
-       mkdir packup
-       7z a -t7z packup/qsdk.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -ms=4g -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
-
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@main
-      with:
-        name: qsdk-ax6
-        path: /home/runner/work/qsdk-ax6/packup
-
+        git config --global user.email "782558181@qq.com"
+        git config --global user.name "ZarkZero"
+        git init
+        git checkout main
+        git add .
+        git commit -m -q "Add changes" -a
+        git remote add origin https://ZarkZero:${{ env.github_token }}@github.com/ZarkZero/qsdk-ax6
+        git pull --rebase origin main
+        git push -u -q origin main
