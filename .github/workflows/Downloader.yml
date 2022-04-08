@@ -53,8 +53,9 @@ jobs:
         git config --global user.name "ZarkZero"
         git init
         git checkout main
+        git rm --cached .repo/manifests
         git add .
-        git commit -m -q "Add changes" -a
+        git commit -m -q "Add changes"
         git remote add origin https://ZarkZero:${{ env.github_token }}@github.com/ZarkZero/qsdk-ax6
         git pull --rebase origin main
         git push -u -q origin main
