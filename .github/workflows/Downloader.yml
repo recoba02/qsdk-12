@@ -52,7 +52,7 @@ jobs:
         git config --global user.email "782558181@qq.com"
         git config --global user.name "ZarkZero"
         rm -rf .repo/mainfests
-        git rm --cached .repo/manifests
+        rm -rf .git .github
         git init
         git checkout main
         git add .
