@@ -25,22 +25,21 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo timedatectl set-timezone "$TZ"
-        sudo mkdir -p /workdir
-        sudo chown $USER:$GROUPS /workdir
 
     - name: Clone source code
       run: |
-       svn co https://github.com/a520ass/openwrt-third-packages/trunk/luci-theme-netgear package/openwrt-packages/luci-theme-netgear
-       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-argonne package/openwrt-packages/luci-theme-argonne
-       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-atmaterial_new package/openwrt-packages/luci-theme-atmaterial_new
-       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-neobird package/openwrt-packages/luci-theme-neobird
-       svn co https://github.com/kenzok8/small-package/trunk/luci-app-argonne-config package/openwrt-packages/luci-app-argonne-config
+       curl https://storage.googleapis.com/git-repo-downloads/repo -o repo
+       chmod +x repo
+       ./repo init -u git://source.codeaurora.org/quic/cc-qrdk/releases/manifest/qstak -b release -m caf_AU_LINUX_QSDK_NHSS.QSDK.11.5.0.5.R7_TARGET_ALL.12.0.000.934.009.xml
+       ls
+       ./repo sync
+       ls
 
     - name: Achieve
       run: |
        cd ..
        mkdir packup
-       7z a -t7z packup/sources.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -ms=4g -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
+       7z a -t7z packup/qsdk-11.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -ms=4g -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
