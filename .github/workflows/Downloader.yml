@@ -52,12 +52,11 @@ jobs:
         git config --global user.email "782558181@qq.com"
         git config --global user.name "ZarkZero"
         rm -rf .repo/manifests
-        rm -rf .git .github
         git init
         git checkout main
         git add .
-        git commit -m -q "Add changes"
-        git remote add origin https://ZarkZero:${{ env.github_token }}@github.com/ZarkZero/qsdk-ax6
+        git commit -m -q "Add changes" -a
+        git remote add origin https://ZakZero:${{ env.github_token }}@github.com/ZarkZero/qsdk-ax6
         git pull --rebase origin main
         git push -u -q origin main
 
