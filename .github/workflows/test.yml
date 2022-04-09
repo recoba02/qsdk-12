@@ -1,4 +1,4 @@
-name: test
+name: Downloader
 
 on:
   repository_dispatch:
@@ -14,7 +14,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout
@@ -25,6 +25,25 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
 
-    - name: Check space usage
-      run: df -hT
+    - name: Clone source code
+      run: |
+       svn co https://github.com/a520ass/openwrt-third-packages/trunk/luci-theme-netgear package/openwrt-packages/luci-theme-netgear
+       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-argonne package/openwrt-packages/luci-theme-argonne
+       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-atmaterial_new package/openwrt-packages/luci-theme-atmaterial_new
+       svn co https://github.com/kenzok8/small-package/trunk/luci-theme-neobird package/openwrt-packages/luci-theme-neobird
+       svn co https://github.com/kenzok8/small-package/trunk/luci-app-argonne-config package/openwrt-packages/luci-app-argonne-config
+
+    - name: Achieve
+      run: |
+       cd ..
+       mkdir packup
+       7z a -t7z packup/sources.7z /home/runner/work/qsdk-ax6/qsdk-ax6/* -ms=4g -mx=9 -mf -mhc -mhcf -m0=LZMA2:a=2:d=26:fb=64 -mmt
+
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@main
+      with:
+        name: qsdk-ax6
+        path: /home/runner/work/qsdk-ax6/packup
