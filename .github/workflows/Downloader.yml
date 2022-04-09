@@ -51,9 +51,10 @@ jobs:
       run: |
         git config --global user.email "782558181@qq.com"
         git config --global user.name "ZarkZero"
+        rm -rf .repo/mainfests
+        git rm --cached .repo/manifests
         git init
         git checkout main
-        git rm --cached .repo/manifests
         git add .
         git commit -m -q "Add changes"
         git remote add origin https://ZarkZero:${{ env.github_token }}@github.com/ZarkZero/qsdk-ax6
